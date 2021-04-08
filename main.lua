@@ -18,7 +18,6 @@ end
 
 function OnPlayerUsingBlock(Player, BlockX, BlockY, BlockZ, BlockFace, CursorX, CursorY, CursorZ, BlockType, BlockMeta)
 	if BlockType == 26 then -- bed
-		LOG(BlockMeta)
 		local item = Player:GetEquippedItem()
 		if item.m_ItemType == 35 then -- wool
 			if not Player:HasPermission('bedchanger.change') then
