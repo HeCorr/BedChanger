@@ -8,7 +8,7 @@ function Initialize(Plugin)
 
 	cPluginManager:AddHook(cPluginManager.HOOK_PLAYER_USING_BLOCK, OnPlayerUsingBlock);
 
-	LOG(Plugin:GetName() .. " v." .. Plugin:GetVersion() .. " up and running!")
+	LOG(Plugin:GetName() .. " v" .. Plugin:GetVersion() .. " up and running!")
 	return true
 end
 
@@ -21,7 +21,7 @@ function OnPlayerUsingBlock(Player, BlockX, BlockY, BlockZ, BlockFace, CursorX, 
 		local item = Player:GetEquippedItem()
 		if item.m_ItemType == 35 then -- wool
 			if not Player:HasPermission('bedchanger.change') then
-				Player:SendMessage("[Bed Changer] You don't have permissions to change your bed color!")
+				Player:SendMessage("[Bed Changer] You don't have permission to change your bed color!")
 				return true
 			end
 			local changed = Player:GetWorld():DoWithBedAt(BlockX, BlockY, BlockZ, function (bed)
