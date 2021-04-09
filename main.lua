@@ -2,7 +2,7 @@ G_Plugin = nil
 
 function Initialize(Plugin)
 	Plugin:SetName("BedChanger")
-	Plugin:SetVersion(1)
+	Plugin:SetVersion(2)
 
 	G_Plugin = Plugin
 
