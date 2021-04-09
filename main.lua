@@ -26,27 +26,22 @@ function OnPlayerUsingBlock(Player, BlockX, BlockY, BlockZ, BlockFace, CursorX, 
 			end
 			local changed = Player:GetWorld():DoWithBedAt(BlockX, BlockY, BlockZ, function (bed)
 				bed:SetColor(item.m_ItemDamage)
-				-- this monstrosity fixes only half of the bed being updated
+				-- this is a workaround for updating the other half of the bed
+				-- since SetColor() only updates a single block.
+				local nextX = BlockX
+				local nextZ = BlockZ
 				if BlockMeta == 3 or BlockMeta == 9 then
-					Player:GetWorld():DoWithBedAt(BlockX+1, BlockY, BlockZ, function (bed)
-						bed:SetColor(item.m_ItemDamage)
-					end)
+					nextX = nextX + 1
+				elseif BlockMeta == 1 or BlockMeta == 11 then
+					nextX = nextX - 1
+				elseif BlockMeta == 0 or BlockMeta == 10 then
+					nextZ = nextZ + 1
+				elseif BlockMeta == 2 or BlockMeta == 8 then
+					nextZ = nextZ - 1
 				end
-				if BlockMeta == 1 or BlockMeta == 11 then
-					Player:GetWorld():DoWithBedAt(BlockX-1, BlockY, BlockZ, function (bed)
-						bed:SetColor(item.m_ItemDamage)
-					end)
-				end
-				if BlockMeta == 0 or BlockMeta == 10 then
-					Player:GetWorld():DoWithBedAt(BlockX, BlockY, BlockZ+1, function (bed)
-						bed:SetColor(item.m_ItemDamage)
-					end)
-				end
-				if BlockMeta == 2 or BlockMeta == 8 then
-					Player:GetWorld():DoWithBedAt(BlockX, BlockY, BlockZ-1, function (bed)
-						bed:SetColor(item.m_ItemDamage)
-					end)
-				end
+				Player:GetWorld():DoWithBedAt(nextX, BlockY, nextZ, function (bed)
+					bed:SetColor(item.m_ItemDamage)
+				end)
 				return true
 			end)
 			if changed then
